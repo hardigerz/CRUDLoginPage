@@ -15,4 +15,7 @@ class LoginActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
     }
+
+
+
 }

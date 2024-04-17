@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         initClick()
     }
 
-    private fun initClick(){
+    private fun initClick() {
         binding.apply {
             loginButton.setOnClickListener {
                 // Navigate to LoginActivity
@@ -29,10 +29,23 @@ class MainActivity : AppCompatActivity() {
             }
 
             registerButton.setOnClickListener {
+                //If User input login and then click register
+                initCleanData()
                 // Navigate to LoginActivity
                 val intent = Intent(this@MainActivity, RegisterActivity::class.java)
                 startActivity(intent)
             }
+        }
+    }
+    private fun initCleanData() {
+        binding.apply {
+            passwordEditText.text?.clear()
+            emailEditText.text?.clear()
+            passwordTextInputLayout.clearFocus()
+            emailTextInputLayout.clearFocus()
+            passwordEditText.clearFocus()
+            emailTextInputLayout.clearFocus()
+
         }
     }
 }
