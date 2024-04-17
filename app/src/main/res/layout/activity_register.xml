@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/emailTextInputLayout"
             app:layout_goneMarginTop="@dimen/margin_16dp"
-            app:passwordToggleEnabled="true">
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"

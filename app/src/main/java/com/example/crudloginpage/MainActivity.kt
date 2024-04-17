@@ -80,10 +80,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-
-        // Check if email is valid
-
-
         // Check if two are meet then
         //Navigate to LoginActivity
         binding.passwordTextInputLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
