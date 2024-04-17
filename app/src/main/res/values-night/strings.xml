@@ -5,4 +5,13 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="welcome">Welcome</string>
+    <string name="username">Username</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+
+
+    <string-array name="roles_array">
+        <item>Admin</item>
+        <item>Normal User</item>
+    </string-array>
 </resources>
