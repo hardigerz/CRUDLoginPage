@@ -8,6 +8,7 @@
     <string name="username">Username</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="logout">Logout</string>
 
 
     <string-array name="roles_array">

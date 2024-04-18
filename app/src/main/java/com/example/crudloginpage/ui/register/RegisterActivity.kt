@@ -128,5 +128,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         coroutineScope.cancel()
+        viewModel.registeredUser.removeObservers(this)
+        viewModel.registrationResult.removeObservers(this)
     }
 }

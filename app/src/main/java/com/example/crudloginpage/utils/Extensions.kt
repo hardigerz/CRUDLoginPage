@@ -1,6 +1,8 @@
 package com.example.crudloginpage.utils
 
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 
 fun View.visible(){
     this.visibility = View.VISIBLE
@@ -40,3 +42,18 @@ val String.condition1Check get() = passwordCondition1.all { check -> check(this)
 val String.condition2Check get() = passwordCondition2.all { check -> check(this) }
 // Validasi Kondisi 3
 val String.condition3Check get() = passwordCondition3.all { check -> check(this) }
+
+
+inline fun <T> LiveData<T>.observeNonNull(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
+    this.observe(owner) { value ->
+        value?.let(observer)
+    }
+}
+
+inline fun <T> LiveData<T>.observeNull(owner: LifecycleOwner, crossinline observer: () -> Unit) {
+    this.observe(owner) { value ->
+        if (value == null) {
+            observer()
+        }
+    }
+}
