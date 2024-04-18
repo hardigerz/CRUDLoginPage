@@ -4,6 +4,7 @@ package com.example.crudloginpage.ui.register
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.crudloginpage.R
 import com.example.crudloginpage.databinding.ActivityRegisterBinding
@@ -16,14 +17,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private lateinit var binding: ActivityRegisterBinding
+
+    private val viewModel: RegisterViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -31,6 +33,16 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(view)
         initRole()
         initClick()
+        viewModel.registrationResult.observe(this) { success ->
+            if (success) {
+                viewModel.registeredUser.observe(this) { user ->
+                    showToastAndFinish(user.username, user.email, user.password, user.role)
+                }
+            } else {
+                // Display error message
+                Timber.d("Something Bad Happen")
+            }
+        }
     }
 
     private fun initClick() {
@@ -110,10 +122,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.passwordTextInputLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
 
         //Back To Finish
-        coroutineScope.launch {
-            delay(2000) // Delay for 5 seconds (5000 milliseconds)
-            showToastAndFinish(username, email, password, selectedSpinnerText)
-        }
+        viewModel.register(username, password, selectedSpinnerText, email)
     }
 
     override fun onDestroy() {
