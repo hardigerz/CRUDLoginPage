@@ -9,6 +9,10 @@
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="logout">Logout</string>
+    <string name="update">Update</string>
+    <string name="role">Role</string>
+    <string name="data_user">Data User</string>
+    <string name="id">ID</string>
 
     <string-array name="roles_array">
         <item>Admin</item>

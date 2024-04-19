@@ -40,6 +40,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.CRUDLoginPage">
         </activity>
+        <activity android:name=".ui.update.UpdateActivitity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.CRUDLoginPage">
+        </activity>
     </application>
 
 </manifest>

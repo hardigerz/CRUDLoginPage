@@ -17,6 +17,7 @@ import com.example.crudloginpage.utils.observeNonNull
 import com.example.crudloginpage.utils.observeNull
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -35,8 +36,7 @@ class MainActivity : AppCompatActivity() {
                     navigateToDashboard(role)
                 }
                 viewModel.userRole.observeNull(this) {
-                    Toast.makeText(this@MainActivity, "User role not found", Toast.LENGTH_SHORT)
-                        .show()
+                   Timber.d("USer Role Not Found")
                 }
             } else {
                 Toast.makeText(
