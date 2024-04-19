@@ -13,6 +13,10 @@ fun View.inVisible(){
     this.visibility = View.INVISIBLE
 }
 
+fun View.gone(){
+    this.visibility = View.GONE
+}
+
 fun String.isValidEmail(): Boolean {
     val emailRegex = Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")
     return emailRegex.matches(this)

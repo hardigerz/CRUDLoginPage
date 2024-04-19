@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.crudloginpage.MainActivity
 import com.example.crudloginpage.adapter.PhotoAdapter
 import com.example.crudloginpage.databinding.ActivityLoginUserBinding
+import com.example.crudloginpage.utils.Resource
+import com.example.crudloginpage.utils.gone
+import com.example.crudloginpage.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -30,6 +32,7 @@ class LoginUserActivity : AppCompatActivity() {
         binding = ActivityLoginUserBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        viewModel.fetchPhotos()
         photoAdapter = PhotoAdapter()
         binding.rvContent.apply {
             adapter = photoAdapter
@@ -63,10 +66,10 @@ class LoginUserActivity : AppCompatActivity() {
                     loadState.prepend is LoadState.Loading
                 ) {
                     // Show progress bar when loading is in progress
-                    binding.progressBar.isVisible = true
+                    binding.progressBar.visible()
                 } else {
                     // Hide progress bar when loading is not in progress
-                    binding.progressBar.isVisible = false
+                    binding.progressBar.gone()
 
                     // If we have an error, show a toast
                     val errorState = when {
@@ -79,14 +82,33 @@ class LoginUserActivity : AppCompatActivity() {
                         Toast.makeText(this, it.error.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
-        }
-    }
-        lifecycleScope.launch {
-            viewModel.getPhoto().collectLatest { pagingData ->
-                photoAdapter.submitData(pagingData)
+
             }
         }
-        viewModel.getPhoto()
+
+        viewModel.photosLiveData.observe(this) { resource ->
+            when (resource) {
+                is Resource.Loading -> {
+                    // Show loading progress
+                    binding.progressBar.visible()
+                }
+
+                is Resource.Success -> {
+                    // Update UI with the data
+                    lifecycleScope.launch {
+                        resource.data?.let { photoAdapter.submitData(it) }
+                    }
+                }
+
+                is Resource.Error -> {
+                    // Show error message
+                    val errorMessage = resource.message ?: "An error occurred"
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                }
+
+                else -> {}
+            }
+        }
         initClick()
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -100,7 +122,9 @@ class LoginUserActivity : AppCompatActivity() {
     private fun initClick() {
         binding.apply {
             logoutButton.setOnClickListener {
-                finish()
+                val intent = Intent(this@LoginUserActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish() // F
             }
         }
     }
