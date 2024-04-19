@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 
+
 fun View.visible(){
     this.visibility = View.VISIBLE
 }
@@ -57,3 +58,4 @@ inline fun <T> LiveData<T>.observeNull(owner: LifecycleOwner, crossinline observ
         }
     }
 }
+

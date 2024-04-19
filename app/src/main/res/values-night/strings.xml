@@ -12,6 +12,8 @@
     <string name="update">Update</string>
     <string name="role">Role</string>
     <string name="id">ID</string>
+    <string name="something_went_wrong">Somehting Went Wrong</string>
+    <string name="retry">Retry</string>
 
 
     <string-array name="roles_array">
